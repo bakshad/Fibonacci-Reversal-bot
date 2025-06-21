@@ -1,3 +1,10 @@
+# Enable error tracing
+import warnings
+warnings.filterwarnings('default')
+
+print("🛠️ DEBUG MODE ON – tracing execution")
+
+
 name: Hourly Fibonacci Signal Monitor (Market Hours Only)
 
 on:
