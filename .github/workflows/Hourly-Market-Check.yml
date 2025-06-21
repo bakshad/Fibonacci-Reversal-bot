@@ -1,0 +1,33 @@
+name: Hourly Fibonacci Signal Monitor (Market Hours Only)
+
+on:
+  schedule:
+    - cron: '45 3 * * 1-5'   # 9:15 AM IST
+    - cron: '45 4 * * 1-5'   # 10:15 AM IST
+    - cron: '45 5 * * 1-5'   # 11:15 AM IST
+    - cron: '45 6 * * 1-5'   # 12:15 PM IST
+    - cron: '45 7 * * 1-5'   # 01:15 PM IST
+    - cron: '45 8 * * 1-5'   # 02:15 PM IST
+    - cron: '45 9 * * 1-5'   # 03:15 PM IST
+
+  workflow_dispatch:  # manual trigger option
+
+jobs:
+  run-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          pip install papermill requests yfinance ta xgboost pandas_ta
+
+      - name: Run notebook hourly
+        run: |
+          papermill Fibonacci_Jackpot_Reversal_Detector_Nifty_Daily_v1.ipynb output.ipynb
