@@ -29,5 +29,4 @@ jobs:
 
       - name: 🚀 Run Fibonacci Reversal Notebook
         run: |
-         - name: Run Fibonacci Reversal Notebook
-  run: papermill Fibonacci_Jackpot_Reversal_Detector_MultiStock_v3.ipynb output.ipynb
+         papermill Fibonacci_Jackpot_Reversal_Detector_MultiStock_v3.ipynb output.ipynb
