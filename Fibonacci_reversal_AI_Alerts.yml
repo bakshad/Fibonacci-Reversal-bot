@@ -28,4 +28,5 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          papermill "Nifty_Futures_Fibonacci_AI_Alerts.ipynb" "output.ipynb"
+          papermill "NSE_Futures_Fibonacci_Reversal_AI.ipynb" "output.ipynb"
+      
