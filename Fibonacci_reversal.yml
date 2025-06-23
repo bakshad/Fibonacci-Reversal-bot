@@ -2,7 +2,7 @@ name: Hourly Fibonacci Reversal Monitor
 
 on:
   schedule:
-    - cron: '15 3-10 * * 1-5'  # Every hour from 8:15 to 3:15 IST (Mon–Fri)
+    - cron: '15 3-10 * * 1-5'  # Runs hourly from 8:15 AM to 3:15 PM IST (Mon–Fri)
   workflow_dispatch:
 
 jobs:
@@ -23,15 +23,9 @@ jobs:
           pip install -U pip
           pip install pandas numpy yfinance requests papermill
 
-      - name: 🔐 Set Telegram Secrets
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: echo "🔐 Telegram secrets loaded"
-
       - name: 🧠 Run Fibonacci Reversal Notebook
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          papermill Fibonacci_Jackpot_Reversal_Detector_MultiStock_v3.ipynb output.ipynb
+          papermill "Fibonacci_Jackpot_Reversal_Detector_MultiStock_v3.ipynb" "output.ipynb"
