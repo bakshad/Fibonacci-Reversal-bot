@@ -27,6 +27,5 @@ jobs:
         run: |
           pip install papermill yfinance pandas numpy requests
 
-      - name: 🚀 Run Fibonacci Reversal Notebook
-        run: |
-         papermill Fibonacci_Jackpot_Reversal_Detector_MultiStock_v3.ipynb output.ipynb
+      - name: Run Fibonacci Reversal Notebook
+  run: papermill Fibonacci_Jackpot_Reversal_Detector_MultiStock_v3.ipynb output.ipynb
