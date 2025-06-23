@@ -1,16 +1,16 @@
-name: Hourly Fibonacci Reversal AI Monitor
+name: Run XGBoost Fibonacci Reversal Notebook
 
 on:
-  schedule:
-    - cron: '15 3-10 * * 1-5'
   workflow_dispatch:
+  schedule:
+    - cron: '15 3-10 * * 1-5'  # Every hour from 8:15 to 3:15 IST (Mon–Fri)
 
 jobs:
   run-xgboost-notebook:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout Repository
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
       - name: 🐍 Set up Python
@@ -18,22 +18,17 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: 📦 Install Dependencies
+      - name: 📦 Install dependencies
         run: |
           pip install -U pip
-          pip install pandas numpy yfinance requests papermill ta joblib
+          pip install pandas numpy yfinance requests xgboost scikit-learn matplotlib seaborn papermill jupyter
 
-      - name: 🔐 Load Telegram Secrets
+      - name: 🔐 Load Telegram secrets
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: echo "✅ Telegram secrets loaded"
+        run: echo "🔐 Telegram secrets loaded"
 
-      - name: 🧠 Run XGBoost-Filtered Fibonacci Notebook
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: 🧠 Run XGBoost Fibonacci Reversal Notebook
         run: |
-          - name: 🧠 Run Fibonacci Reversal Notebook
-  run: |
-    papermill Fibonacci_Jackpot_Reversal_Detector_XGB.ipynb output.ipynb --kernel python3
+          papermill Fibonacci_Jackpot_Reversal_Detector_XGB.ipynb output.ipynb --kernel python3
