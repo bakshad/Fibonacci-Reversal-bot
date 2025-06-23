@@ -2,7 +2,7 @@ name: Fibonacci Reversal AI Alerts
 
 on:
   schedule:
-    - cron: '15 3-10 * * 1-5'  # Every hour from 8:15 to 3:15 IST (Mon–Fri)
+    - cron: '15 3-10 * * 1-5'  # Every hour from 8:15 AM to 3:15 PM IST (Mon–Fri)
   workflow_dispatch:
 
 jobs:
