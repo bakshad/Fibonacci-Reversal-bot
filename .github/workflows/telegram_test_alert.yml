@@ -1,0 +1,15 @@
+name: Telegram Test Alert
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  send_alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Test Alert
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="✅ *Test Alert:* Telegram Bot Integration Successful via GitHub Actions!" \
+          -d parse_mode=Markdown
