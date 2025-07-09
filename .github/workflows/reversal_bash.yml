@@ -24,7 +24,7 @@ jobs:
 
     - name: Run script to generate training data
       run: |
-        python generate_reversal_training_data.py
+        python generate_reversal_training_data_v2.py
 
     - name: Upload reversal_training_data.csv
       uses: actions/upload-artifact@v4
