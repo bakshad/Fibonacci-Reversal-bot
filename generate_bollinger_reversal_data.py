@@ -9,7 +9,12 @@ from ta.volatility import BollingerBands, AverageTrueRange
 from tqdm import tqdm
 
 def get_fno_symbols():
-    return ['RELIANCE', 'TCS', 'INFY', 'ICICIBANK', 'HDFCBANK', 'SBIN', 'ITC', 'HINDUNILVR']
+    url = 'https://archives.nseindia.com/content/fo/fo_mktlots.csv'
+    try:
+        df = pd.read_csv(url)
+        return df['SYMBOL'].dropna().unique().tolist()
+    except:
+        return ['RELIANCE', 'TCS', 'INFY']
 
 START_DATE = (datetime.today() - timedelta(days=180)).strftime('%Y-%m-%d')
 END_DATE = datetime.today().strftime('%Y-%m-%d')
