@@ -23,7 +23,7 @@ jobs:
         pip install pandas numpy yfinance ta tqdm requests
 
     - name: Run Bollinger Reversal Strategy
-      run: python generate_bollinger_reversal_signals_nifty50.py
+      run: python generate_bollinger_reversal_signals_nifty50_v2.py
 
     - name: Send Telegram Alerts
       if: success()
