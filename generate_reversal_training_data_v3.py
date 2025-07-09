@@ -12,7 +12,7 @@ from tqdm import tqdm
 def get_fno_symbols():
     return ['RELIANCE', 'TCS', 'INFY', 'ICICIBANK', 'HDFCBANK', 'SBIN', 'HINDUNILVR', 'ITC']
 
-START_DATE = (datetime.today() - timedelta(days=180)).strftime('%Y-%m-%d')  # Increased to 180 days
+START_DATE = (datetime.today() - timedelta(days=240)).strftime('%Y-%m-%d')  # Increased to 240 days
 END_DATE = datetime.today().strftime('%Y-%m-%d')
 
 def generate_features(df):
