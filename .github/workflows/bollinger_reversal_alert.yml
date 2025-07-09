@@ -1,8 +1,8 @@
-name: Bollinger Band Reversal Bot
+name: Nifty50 Bollinger Reversal Bot
 
 on:
   schedule:
-    - cron: '*/15 3-10 * * 1-5'  # Every 15 min from 8:30 AM to 3:30 PM IST (03:00–10:00 UTC)
+    - cron: '*/15 3-10 * * 1-5'  # Every 15 min from 8:30–15:30 IST (03:00–10:00 UTC)
   workflow_dispatch:
 
 jobs:
@@ -22,24 +22,22 @@ jobs:
       run: |
         pip install pandas numpy yfinance ta tqdm requests
 
-    - name: Run Bollinger Reversal Script
-      run: python generate_bollinger_reversal_data.py
+    - name: Run Bollinger Reversal Strategy
+      run: python generate_bollinger_reversal_signals_nifty50.py
 
     - name: Send Telegram Alerts
       if: success()
       run: |
-        import pandas as pd
-        import requests
-        import os
+        import pandas as pd, os, requests
 
-        file = 'bollinger_reversal_data.csv'
+        file = 'bollinger_reversal_signals.csv'
         if not os.path.exists(file):
-            print("No data file found. Skipping alert.")
+            print("No file found")
             exit(0)
 
         df = pd.read_csv(file)
         if df.empty:
-            print("No signals to alert.")
+            print("No signals today.")
             exit(0)
 
         token = '${{ secrets.TELEGRAM_BOT_TOKEN }}'
@@ -47,19 +45,20 @@ jobs:
 
         for _, row in df.iterrows():
             msg = (
-                f"🔔 *{row['Symbol']}* - *{row['SignalType']} Reversal*\\n"
-                f"📅 {row['Date']}\\n"
-                f"💰 Close: {row['Close']:.2f}\\n"
-                f"📊 RSI: {row['RSI']:.1f}, MACD Diff: {row['MACD_DIFF']:.2f}"
+                f"📈 *{row['Symbol']}* - *{row['SignalType']} Reversal*\\n"
+                f"💰 Close: ₹{row['Close']:.2f}  |  RSI: {row['RSI']:.1f}\\n"
+                f"🟢 Option: {row['Option']}\\n"
+                f"🎯 Target: ₹{row['TargetPrice']}  |  🛑 SL: ₹{row['SL']}\\n"
+                f"📅 {row['Date']}"
             )
             requests.post(
-              f'https://api.telegram.org/bot{token}/sendMessage',
+              f"https://api.telegram.org/bot{token}/sendMessage",
               data={'chat_id': chat_id, 'text': msg, 'parse_mode': 'Markdown'}
             )
       shell: python
 
-    - name: Upload CSV as artifact
+    - name: Upload Signal CSV
       uses: actions/upload-artifact@v4
       with:
-        name: bollinger_reversal_data
-        path: bollinger_reversal_data.csv
+        name: bollinger_reversal_signals
+        path: bollinger_reversal_signals.csv
